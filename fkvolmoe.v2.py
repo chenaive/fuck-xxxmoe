@@ -15,7 +15,6 @@ def mkdir(path):
     if folder:
         print("已有目录:", path)
 
-
 for filename in files:
     portion = os.path.splitext(filename) 
 
@@ -32,10 +31,6 @@ for filename in files:
         for filename in z.namelist( ):
             if "html/" in filename:
                 html_name.append(filename)
-                # if "cover" in filename:
-                #     html_name.append(filename)
-                # elif ("0","1","2","3","4","5","6","7","8","9") in filename:
-                #     html_name.append(filename)
             if "image/" in filename:
                 image_name.append(filename) 
         html_name.sort()
@@ -46,24 +41,15 @@ for filename in files:
         try:
             #读取zip文件中的文件
             for i in html_name:
-
                 content = z.read(i)
 
                 # print(content)
-                # print(type(content))
-
                 soup = BeautifulSoup(z.read(i),features='html.parser')  #features值可为lxml
-
                 main_div = soup.find('div',{'class': 'fs'})
                 img = main_div.find("img")
                 img_url = img.get("src")
                 img_url = img_url[3:]
-                # print("img_url:",img_url)
 
-                # print(type(("./" + folder_path + "已处理/" + img_url)))
-                
-
-                # z.extract(img_url, path = folder_path)
                 z.extract(img_url, path = folder_path)
                 if "cover" in i:
                     newname = i[5:]
@@ -76,4 +62,3 @@ for filename in files:
                 # print("已完成:", newname)
         except KeyError:
             pass
-
